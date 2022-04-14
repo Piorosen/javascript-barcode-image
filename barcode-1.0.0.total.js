@@ -5023,7 +5023,7 @@ function dataURItoBlob(dataURI) {
     return bb;
 }
 
-function printCanvas(elementById) {
+function printCanvas(elementById, url) {
     var form = new FormData();
     const fileInput = document.querySelector(elementById)
     const blob = uploadCanvasData(elementById)
@@ -5031,7 +5031,7 @@ function printCanvas(elementById) {
     form.append("image", blob, "image")
 
     var settings = {
-        "url": "http://127.0.0.1:5000/Printer",
+        "url": url,
         // "dataType": "jsonp",
         "method": "POST",
         "timeout": 0,
@@ -5053,7 +5053,7 @@ function drawBarcode(elementById, barcodeData) {
     })
 }
 
-function sendToImage(elementById, barcodeData) {
+function sendToImage(elementById, barcodeData, url) {
 
     d = document.createElement("div")
     d.id = "capture_create_div_id"
@@ -5064,7 +5064,7 @@ function sendToImage(elementById, barcodeData) {
     html2canvas(document.querySelector("#capture_create_div_id")).then(canvas => {
         canvas.id = "capture_canvas_id"
         $(elementById).append(canvas)
-        printCanvas("#capture_canvas_id")
+        printCanvas("#capture_canvas_id", url)
         canvas.remove()
         d.remove()
     });
