@@ -5052,9 +5052,7 @@ function drawBarcode(elementById, barcodeData, ratio = 3) {
     })
 }
 
-function sendToImage(elementById, barcodeData, url) {
-    const ratio = 3
-    drawBarcode(elementById, barcodeData, 3)
+function elementPrint(elementById, url) {
     html2canvas(document.querySelector(elementById)).then(canvas => {
         printCanvas(canvas, url)
     });
