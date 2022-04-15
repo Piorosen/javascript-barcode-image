@@ -5023,10 +5023,10 @@ function dataURItoBlob(dataURI) {
     return bb;
 }
 
-function printCanvas(elementById, url) {
+function printCanvas(canvas, url) {
     var form = new FormData();
-    const fileInput = document.querySelector(elementById)
-    const blob = uploadCanvasData(elementById)
+    const fileInput = canvas
+    const blob = uploadCanvasData(canvas)
     console.log(blob)
     form.append("image", blob, "image")
 
@@ -5044,21 +5044,18 @@ function printCanvas(elementById, url) {
     $.ajax(settings);
 }
 
-function drawBarcode(elementById, barcodeData, ratio) {
+function drawBarcode(elementById, barcodeData, ratio = 3) {
     $(elementById).barcode(barcodeData, "ean13", {
         barWidth: ratio,
         barHeight: ratio * 50,
         fontSize: ratio * 10,
-        output: "canvas"
     })
 }
 
 function sendToImage(elementById, barcodeData, url) {
-
+    const ratio = 3
     drawBarcode(elementById, barcodeData, 3)
     html2canvas(document.querySelector(elementById)).then(canvas => {
-        printCanvas(elementById, url)
-        canvas.remove()
-        d.remove()
+        printCanvas(canvas, url)
     });
 }
