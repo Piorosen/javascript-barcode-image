@@ -5044,27 +5044,20 @@ function printCanvas(elementById, url) {
     $.ajax(settings);
 }
 
-function drawBarcode(elementById, barcodeData) {
-    const ratio = 3
+function drawBarcode(elementById, barcodeData, ratio) {
     $(elementById).barcode(barcodeData, "ean13", {
         barWidth: ratio,
         barHeight: ratio * 50,
-        fontSize: ratio * 10
+        fontSize: ratio * 10,
+        output: "canvas"
     })
 }
 
 function sendToImage(elementById, barcodeData, url) {
 
-    d = document.createElement("div")
-    d.id = "capture_create_div_id"
-    $(elementById).append(d)
-
-    drawBarcode("#capture_create_div_id", barcodeData)
-
-    html2canvas(document.querySelector("#capture_create_div_id")).then(canvas => {
-        canvas.id = "capture_canvas_id"
-        $(elementById).append(canvas)
-        printCanvas("#capture_canvas_id", url)
+    drawBarcode(elementById, barcodeData, 3)
+    html2canvas(document.querySelector(elementById)).then(canvas => {
+        printCanvas(elementById, url)
         canvas.remove()
         d.remove()
     });
